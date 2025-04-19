@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Monty Hall Problem</title>
+    <style>
+        .win { color: green; font-weight: bold; }
+        .lose { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>The Monty Hall Problem</h1>
+
+    <script>
+        var stayCounter = 0;
+        var switchCounter = 0;
+
+        for (var i = 0; i < 10; i++) {
+            // Car is behind a random door
+            var car = Math.ceil(Math.random() * 3);
+            document.write("<p>The car is behind door number " + car + "</p>");
+
+            // Contestant randomly chooses a door
+            var choice = Math.ceil(Math.random() * 3);
+            document.write("<p>The contestant chose door number " + choice + "</p>");
+
+            // Host removes a door that is neither the car nor the contestant's choice
+            var removedDoor;
+            do {
+                removedDoor = Math.ceil(Math.random() * 3);
+            } while (removedDoor === car || removedDoor === choice);
+            document.write("<p>Door number " + removedDoor + " is removed.</p>");
+
+            // Contestant switches to the remaining unopened door
+            var switchChoice;
+            do {
+                switchChoice = Math.ceil(Math.random() * 3);
+            } while (switchChoice === choice || switchChoice === removedDoor);
+            document.write("<p>If the contestant switches, they will choose door number " + switchChoice + "</p>");
+
+            // Determine outcome
+            if (choice === car) {
+                stayCounter++;
+                document.write("<p class='win'>Contestant should STAY!</p>");
+            } else {
+                switchCounter++;
+                document.write("<p class='lose'>Contestant should SWITCH!</p>");
+            }
+        }
+
+        var percentage = ((stayCounter / 10) * 100).toFixed(2);
+        document.write("<h2>Staying is correct " + percentage + "% of the time</h2>");
+    </script>
+</body>
+</html>
